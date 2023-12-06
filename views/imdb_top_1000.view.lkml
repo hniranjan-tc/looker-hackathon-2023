@@ -1,7 +1,19 @@
 # The name of this view in Looker is "126 Imdbcsv"
 view: imdb_top_1000 {
   derived_table: {
-  sql: select * from 'precise-plane-407222.imdb_dataset.imdb_top_1000';;
+  sql: with CTE as (
+            select title,year,director,actors,genre,rating,metascore,Runtime__Minutes_, Revenue__Millions_,no_of_votes ,
+              min(no_of_votes) over() as min_votes,
+              max(no_of_votes) over() as max_votes
+            from precise-plane-407222.imdb_dataset.imdb_top_1000
+            )
+            select
+              title,year,director,actors,genre,rating,metascore,Runtime__Minutes_, Revenue__Millions_,no_of_votes,
+              min_votes,max_votes,
+              (no_of_votes - min_votes)/(max_votes-min_votes) as normalise_votes,
+              imdb_rating+(no_of_votes - min_votes)/(max_votes-min_votes) as modified_rating
+            from CTE
+;;
 }
   set: detail {
     fields: [title,year,director,genre,imdb_rating,meta_score,runtime,gross,no_of_votes]
@@ -33,7 +45,7 @@ view: imdb_top_1000 {
   }
 
   dimension: no_of_votes {
-    type: string
+    type: number
     sql: ${TABLE}.No_of_Votes ;;
   }
 
@@ -43,7 +55,7 @@ view: imdb_top_1000 {
   }
 
   dimension: year {
-    type: string
+    type: number
     sql: ${TABLE}.Released_Year ;;
   }
 
@@ -81,10 +93,32 @@ view: imdb_top_1000 {
     type: sum
     sql: ${TABLE}.Runtime ;;
   }
+# # create relation between No_of_Votes and ratings
+# normalize_No_of_Votes = (df['No_of_Votes']-df['No_of_Votes'].min()) / (df['No_of_Votes'].max()-df['No_of_Votes'].min())
+# df['Modified_Rating'] =  normalize_No_of_Votes + df['IMDB_Rating']
 
-
-
-  measure: count {
-    type: count
+  dimension: min_votes {
+    type: number
+    #hidden: yes
+    sql: ${TABLE}.min_votes ;;
   }
+
+  dimension: max_votes {
+    type: number
+    #hidden: yes
+    sql: ${TABLE}.max_votes ;;
+  }
+
+    dimension: normalise_votes {
+      type: number
+      value_format: "0.00"
+      hidden: yes
+      sql: ${TABLE}.normalise_votes;;
+    }
+
+    dimension: modified_rating {
+      type: number
+      value_format: "0.00"
+      sql:${TABLE}.modified_rating ;;
+    }
 }

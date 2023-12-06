@@ -8,8 +8,9 @@ view: movie_ratings {
             from `imdb.movie_ratings`
             )
             select title,year,director,actors,genre,rating,metascore,Runtime__Minutes_, Revenue__Millions_,votes,
-            min_votes,max_votes,
-              (votes - min_votes)/(max_votes-min_votes) as normalise_votes
+              min_votes,max_votes,
+              (no_of_votes - min_votes)/(max_votes-min_votes) as normalise_votes,
+              imdb_rating+(no_of_votes - min_votes)/(max_votes-min_votes) as modified_rating
             from CTE
 
           ;;
@@ -103,27 +104,27 @@ view: movie_ratings {
 
   dimension: min_votes {
     type: number
-    hidden: yes
+    #hidden: yes
     sql: ${TABLE}.min_votes ;;
   }
 
   dimension: max_votes {
     type: number
-    hidden: yes
+    #hidden: yes
     sql: ${TABLE}.max_votes ;;
   }
 
   dimension: normalise_votes {
     type: number
-    value_format: ".00"
+    value_format: "0.00"
     hidden: yes
     sql: ${TABLE}.normalise_votes;;
   }
 
-  measure: modified_rating {
-    type: sum
-    value_format: ".00"
-    sql: ${normalise_votes} + ${rating} ;;
+  dimension: modified_rating {
+    type: number
+    value_format: "0.00"
+    sql:${TABLE}.modified_rating ;;
   }
 
 }
