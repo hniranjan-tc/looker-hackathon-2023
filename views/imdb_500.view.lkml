@@ -17,6 +17,7 @@ view: imdb_500 {
               (no_of_votes - min_votes)/(max_votes-min_votes) as normalise_votes,
               imdb_rating+(no_of_votes - min_votes)/(max_votes-min_votes) as modified_rating
             from CTE
+            where series_title is not null
         ;;
         }
 
