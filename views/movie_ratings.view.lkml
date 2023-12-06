@@ -1,9 +1,19 @@
 # The name of this view in Looker is "Movie Ratings"
 view: movie_ratings {
-  # The sql_table_name parameter indicates the underlying database table
-  # to be used for all fields in this view.
-  sql_table_name: `lookerdata.imdb.movie_ratings` ;;
+   derived_table: {
+    sql: with CTE as (
+            select title,year,director,actors,genre,rating,metascore,Runtime__Minutes_, Revenue__Millions_,votes ,
+              min(votes) over() as min_votes,
+              max(votes) over() as max_votes
+            from `imdb.movie_ratings`
+            )
+            select title,year,director,actors,genre,rating,metascore,Runtime__Minutes_, Revenue__Millions_,votes,
+            min_votes,max_votes,
+              (votes - min_votes)/(max_votes-min_votes) as normalise_votes
+            from CTE
 
+          ;;
+  }
   set: detail {
     fields: [title,year,director,actors,genre,rating,metascore,runtime_minutes, revenue_millions,votes]
   }
@@ -91,19 +101,29 @@ view: movie_ratings {
 # normalize_No_of_Votes = (df['No_of_Votes']-df['No_of_Votes'].min()) / (df['No_of_Votes'].max()-df['No_of_Votes'].min())
 # df['Modified_Rating'] =  normalize_No_of_Votes + df['IMDB_Rating']
 
-  measure: min_votes {
-    type: min
-    sql: ${votes} ;;
-  }
-
-  measure: max_votes {
-    type: max
-    sql: ${votes} ;;
-  }
-
-  measure: normalise_votes {
+  dimension: min_votes {
     type: number
-    sql: (${votes}-${min_votes})/(${max_votes}-${votes}) ;;
+    hidden: yes
+    sql: ${TABLE}.min_votes ;;
+  }
+
+  dimension: max_votes {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.max_votes ;;
+  }
+
+  dimension: normalise_votes {
+    type: number
+    value_format: ".00"
+    hidden: yes
+    sql: ${TABLE}.normalise_votes;;
+  }
+
+  measure: modified_rating {
+    type: sum
+    value_format: ".00"
+    sql: ${normalise_votes} + ${rating} ;;
   }
 
 }

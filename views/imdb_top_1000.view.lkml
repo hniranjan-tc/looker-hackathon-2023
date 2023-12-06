@@ -1,9 +1,8 @@
 # The name of this view in Looker is "126 Imdbcsv"
 view: imdb_top_1000 {
-  # The sql_table_name parameter indicates the underlying database table
-  # to be used for all fields in this view.
-  sql_table_name: select * from precise-plane-407222.imdb_dataset.imdb_top_1000;;
-
+  derived_table: {
+  sql: select * from 'precise-plane-407222.imdb_dataset.imdb_top_1000';;
+}
   set: detail {
     fields: [title,year,director,genre,imdb_rating,meta_score,runtime,gross,no_of_votes]
   }
