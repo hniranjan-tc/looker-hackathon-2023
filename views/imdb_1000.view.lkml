@@ -1,4 +1,4 @@
-view: imdb_500 {
+view: imdb_1000 {
     derived_table: {
       sql: with CTE as (
             select
@@ -7,7 +7,7 @@ view: imdb_500 {
               meta_score,director,no_of_votes,gross,stars,
               min(no_of_votes) over() as min_votes,
               max(no_of_votes) over() as max_votes
-            from precise-plane-407222.imdb_dataset.imdb_500
+            from precise-plane-407222.imdb_dataset.imdb_1000
             )
             select
               series_title,released_year,

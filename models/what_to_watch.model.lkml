@@ -6,8 +6,8 @@ include: "/views/**/*.view.lkml"
 
 # Explores
 
-explore:imdb_500 {
-  from: imdb_500
+explore:imdb_1000 {
+  from: imdb_1000
 }
 
 # explore:imdb_top_1000 {
