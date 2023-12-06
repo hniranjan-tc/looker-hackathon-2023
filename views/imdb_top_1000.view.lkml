@@ -1,15 +1,12 @@
 # The name of this view in Looker is "126 Imdbcsv"
-view: 126_imdbcsv {
+view: imdb_top_1000 {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: `lookerdata.looker_scratch.126IMDBcsv` ;;
+  sql_table_name: select * from precise-plane-407222.imdb_dataset.imdb_top_1000;;
 
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
-
-    # Here's what a typical dimension looks like in LookML.
-    # A dimension is a groupable field that can be used to filter query results.
-    # This dimension will be called "Certificate" in Explore.
+  set: detail {
+    fields: [title,year,director,genre,imdb_rating,meta_score,runtime,gross,no_of_votes]
+  }
 
   dimension: certificate {
     type: string
@@ -24,11 +21,6 @@ view: 126_imdbcsv {
   dimension: genre {
     type: string
     sql: ${TABLE}.Genre ;;
-  }
-
-  dimension: gross {
-    type: string
-    sql: ${TABLE}.Gross ;;
   }
 
   dimension: imdb_rating {
@@ -51,17 +43,12 @@ view: 126_imdbcsv {
     sql: ${TABLE}.Overview ;;
   }
 
-  dimension: released_year {
+  dimension: year {
     type: string
     sql: ${TABLE}.Released_Year ;;
   }
 
-  dimension: runtime {
-    type: string
-    sql: ${TABLE}.Runtime ;;
-  }
-
-  dimension: series_title {
+  dimension: title {
     type: string
     sql: ${TABLE}.Series_Title ;;
   }
@@ -85,6 +72,19 @@ view: 126_imdbcsv {
     type: string
     sql: ${TABLE}.Star4 ;;
   }
+
+  measure: gross {
+    type: sum
+    sql: ${TABLE}.Gross ;;
+  }
+
+  measure: runtime {
+    type: sum
+    sql: ${TABLE}.Runtime ;;
+  }
+
+
+
   measure: count {
     type: count
   }

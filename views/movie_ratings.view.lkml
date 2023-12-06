@@ -55,6 +55,7 @@ view: movie_ratings {
 
   dimension: votes {
     type: number
+    hidden: yes
     sql: ${TABLE}.Votes ;;
   }
 
@@ -64,7 +65,7 @@ view: movie_ratings {
   }
   dimension: revenue_millions {
     type: number
-    sql: ${TABLE}.Revenue__Millions_ ;;
+    sql: coalesce(${TABLE}.Revenue__Millions_,0) ;;
   }
 
   # Measures
@@ -81,9 +82,28 @@ view: movie_ratings {
     type: count
     drill_fields: [detail*]
   }
+  measure: sum_votes {
+    type: sum
+    sql: ${TABLE}.Votes ;;
+  }
 
 # # create relation between No_of_Votes and ratings
 # normalize_No_of_Votes = (df['No_of_Votes']-df['No_of_Votes'].min()) / (df['No_of_Votes'].max()-df['No_of_Votes'].min())
 # df['Modified_Rating'] =  normalize_No_of_Votes + df['IMDB_Rating']
+
+  measure: min_votes {
+    type: min
+    sql: ${votes} ;;
+  }
+
+  measure: max_votes {
+    type: max
+    sql: ${votes} ;;
+  }
+
+  measure: normalise_votes {
+    type: number
+    sql: (${votes}-${min_votes})/(${max_votes}-${votes}) ;;
+  }
 
 }
