@@ -82,5 +82,8 @@ view: movie_ratings {
     drill_fields: [detail*]
   }
 
+# # create relation between No_of_Votes and ratings
+# normalize_No_of_Votes = (df['No_of_Votes']-df['No_of_Votes'].min()) / (df['No_of_Votes'].max()-df['No_of_Votes'].min())
+# df['Modified_Rating'] =  normalize_No_of_Votes + df['IMDB_Rating']
 
 }
