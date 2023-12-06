@@ -1,7 +1,7 @@
 
 view: imdb_top_1000 {
   derived_table: {
-    sql: Select * from lookerdata.imdbtop1000datacsv ;;
+    sql: Select * from looker_scratch.imdbtop1000datacsv ;;
   }
 
   measure: count {
