@@ -7,7 +7,7 @@
 <p>Our methodology uses a text-based recommendation system that relies on text processing to extract important words from one movies details to match with similar details in another movie to make recommendations! We use a combination of genre, director, stars and movie description to find movies that you are likely to enjoy.</p>
 
 <ul>
-<li><a href="https://www.youtube.com/watch?v=PJkg8od7Ecc" target="_blank">Demo video link</a></li>
+<li><a href="https://youtu.be/4YJ18FtlPJI" target="_blank">Demo video link</a></li>
 <li><a href="https://docs.google.com/presentation/d/1hDxJxINW67dPChyE0yAnPtubOYfjPq7fIL2stg2519U/edit#slide=id.g2632bd4c598_0_0" target="_blank">Demo slides</a></li>
 <li><a href="https://github.com/hniranjan-tc/looker-hackathon-2023" target="_blank">Repo</a></li>
 <li><a href="https://hack.looker.com/dashboards/108?SELECT+A+MOVIE+=Casino+Royale" target="_blank">Working demo link</a></li>
