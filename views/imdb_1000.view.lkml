@@ -90,7 +90,7 @@ view: imdb_1000 {
       sql: ${TABLE}.Runtime ;;
     }
 
-    measure: gross_in_millions {
+    measure: gross_sum {
       type: sum
       sql: ${TABLE}.Gross ;;
     }
@@ -136,8 +136,8 @@ view: imdb_1000 {
 
     measure: avg_gross {
       type: average
-      sql: ${imdb_rating} ;;
-      value_format: "#.##0"
+      sql: ${gross} ;;
+      value_format: "#,##0"
     }
 
     measure: count {
