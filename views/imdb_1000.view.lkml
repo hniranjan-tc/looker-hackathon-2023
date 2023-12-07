@@ -47,6 +47,7 @@ view: imdb_1000 {
 
     dimension: meta_score {
       type: string
+      hidden: yes
       sql: ${TABLE}.Meta_score ;;
     }
 
@@ -91,20 +92,20 @@ view: imdb_1000 {
 
     dimension: min_votes {
       type: number
-      #hidden: yes
+      hidden: yes
       sql: ${TABLE}.min_votes ;;
     }
 
     dimension: max_votes {
       type: number
-      #hidden: yes
+      hidden: yes
       sql: ${TABLE}.max_votes ;;
     }
 
     dimension: normalise_votes {
       type: number
       value_format: "0.00"
-      #hidden: yes
+      hidden: yes
       sql: ${TABLE}.normalise_votes;;
     }
 
