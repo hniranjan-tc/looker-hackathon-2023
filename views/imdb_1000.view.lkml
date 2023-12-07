@@ -115,4 +115,9 @@ view: imdb_1000 {
       value_format: "0.00"
       sql:${TABLE}.modified_rating ;;
     }
+
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
   }
