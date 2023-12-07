@@ -64,6 +64,7 @@ view: imdb_1000 {
     dimension: year {
       type: number
       sql: ${TABLE}.Released_Year ;;
+      value_format: "0"
     }
 
     dimension: title {
