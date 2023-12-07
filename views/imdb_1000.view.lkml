@@ -41,7 +41,7 @@ view: imdb_1000 {
     }
 
     dimension: imdb_rating {
-      type: string
+      type: number
       sql: ${TABLE}.IMDB_Rating ;;
     }
 
@@ -128,8 +128,13 @@ view: imdb_1000 {
       sql:${TABLE}.modified_rating ;;
     }
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
-  }
+    measure: avg_rating {
+      type: average
+      sql: ${imdb_rating} ;;
+      value_format: "#.0"
+    }
+    measure: count {
+      type: count
+      drill_fields: [detail*]
+    }
+}

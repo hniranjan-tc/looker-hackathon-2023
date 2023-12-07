@@ -66,21 +66,25 @@ view: imdb_top_1000 {
 
   dimension: star1 {
     type: string
+    group_label: "Stars"
     sql: ${TABLE}.Star1 ;;
   }
 
   dimension: star2 {
     type: string
+    group_label: "Stars"
     sql: ${TABLE}.Star2 ;;
   }
 
   dimension: star3 {
     type: string
+    group_label: "Stars"
     sql: ${TABLE}.Star3 ;;
   }
 
   dimension: star4 {
     type: string
+    group_label: "Stars"
     sql: ${TABLE}.Star4 ;;
   }
 
