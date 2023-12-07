@@ -14,8 +14,8 @@ view: imdb_1000 {
               certificate, runtime, genre,imdb_rating, overview,
               meta_score,director,no_of_votes,gross,stars,
               min_votes,max_votes,
-              (no_of_votes - min_votes)/(max_votes-min_votes) as normalise_votes,
-              imdb_rating+(no_of_votes - min_votes)/(max_votes-min_votes) as modified_rating
+              round(((no_of_votes - min_votes)/(max_votes-min_votes)),2) as normalise_votes,
+              imdb_rating+round(((no_of_votes - min_votes)/(max_votes-min_votes)),2) as modified_rating
             from CTE
             where series_title is not null
         ;;
@@ -69,6 +69,7 @@ view: imdb_1000 {
 
     dimension: title {
       type: string
+      primary_key: yes
       hidden: yes
       sql: ${TABLE}.Series_Title ;;
     }
