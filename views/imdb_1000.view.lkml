@@ -68,6 +68,7 @@ view: imdb_1000 {
 
     dimension: title {
       type: string
+      hidden: yes
       sql: ${TABLE}.Series_Title ;;
     }
 

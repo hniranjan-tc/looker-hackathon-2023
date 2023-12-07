@@ -10,8 +10,7 @@ explore:imdb_1000 {
   from: imdb_1000
   label: "IMDB Ratings based Recommendations"
   view_label: "Recommendations"
-  fields: [ALL_FIELDS*,
-        -imdb_1000.title
+  fields: [ALL_FIELDS*
       ]
 
   join: cosine_similarity {
