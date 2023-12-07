@@ -8,12 +8,16 @@ include: "/views/**/*.view.lkml"
 
 explore:imdb_1000 {
   from: imdb_1000
+  label: "IMDB Ratings based Recommendations"
+  view_label: "Recommendations"
+  fields: [ALL_FIELDS*,
+        -imdb_1000.title
+      ]
+
+  join: cosine_similarity {
+    type: left_outer
+    view_label: "Recommendations"
+    relationship: many_to_one
+    sql_on: ${imdb_1000.title}=${cosine_similarity.recommendation_title} ;;
+  }
 }
-
-# explore:imdb_top_1000 {
-#   from: imdb_top_1000
-# }
-
-# explore:movie_ratings {
-#   from: movie_ratings
-# }
