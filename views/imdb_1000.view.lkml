@@ -133,6 +133,13 @@ view: imdb_1000 {
       sql: ${imdb_rating} ;;
       value_format: "#.0"
     }
+
+    measure: avg_gross {
+      type: average
+      sql: ${imdb_rating} ;;
+      value_format: "#.##0"
+    }
+
     measure: count {
       type: count
       drill_fields: [detail*]
