@@ -78,12 +78,22 @@ view: imdb_1000 {
       sql: ${TABLE}.stars ;;
     }
 
-    measure: gross {
+    dimension: gross {
+      type: number
+      sql: ${TABLE}.Gross ;;
+    }
+
+    dimension: runtime {
+      type: number
+      sql: ${TABLE}.Runtime ;;
+    }
+
+    measure: gross_in_millions {
       type: sum
       sql: ${TABLE}.Gross ;;
     }
 
-    measure: runtime {
+    measure: runtime_in_minutes {
       type: sum
       sql: ${TABLE}.Runtime ;;
     }
